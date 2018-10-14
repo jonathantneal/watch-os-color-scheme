@@ -1,0 +1,36 @@
+{
+  "name": "watch-os-color-scheme",
+  "version": "1.0.0",
+  "description": "Watch the OS color sceheme",
+  "author": "Jonathan Neal <jonathantneal@hotmail.com>",
+  "license": "CC0-1.0",
+  "repository": "jonathantneal/watch-os-color-scheme",
+  "homepage": "https://github.com/jonathantneal/watch-os-color-scheme#readme",
+  "bugs": "https://github.com/jonathantneal/watch-os-color-scheme/issues",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "start": "node start",
+    "test": "eslint *.js --cache --ignore-path .gitignore --quiet"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.7.0",
+    "eslint-config-dev": "^2.0.0"
+  },
+  "eslintConfig": {
+    "extends": "dev"
+  },
+  "keywords": [
+    "watch",
+    "os",
+    "prefers",
+    "color",
+    "scheme"
+  ]
+}
