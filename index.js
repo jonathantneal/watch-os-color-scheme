@@ -1,28 +1,35 @@
 const { execSync } = require('child_process');
-const defaultPreferredColorScheme = 'light';
-const preferredColorSchemeIntervalDelay = 1000;
-let lastPreferredColorScheme = null, preferredColorSchemeInterval;
+const defaultColorScheme = 'no-preference';
+const defaultDelay = 1000;
+const lightColorSchemeErrorRegExp = /does not exist/;
+let lastColorScheme, timeoutID;
 
-const watchColorScheme = module.exports = callback => {
-	let preferredColorScheme = defaultPreferredColorScheme
+const watch = module.exports = (callback, delay) => {
+	let colorScheme = defaultColorScheme
 
 	try {
-		preferredColorScheme = execSync('defaults read -g AppleInterfaceStyle', { encoding: 'utf8', stdio: [null, null, null] }).trim().toLowerCase();
+		if (process.platform === 'darwin') {
+			colorScheme = execSync('defaults read -g AppleInterfaceStyle', { encoding: 'utf8', stdio: [null, null, null] }).trim().toLowerCase();
+		}
 	} catch (error) {
-		// do nothing and continue
+		if (lightColorSchemeErrorRegExp.test(error.stderr)) {
+			colorScheme = 'light'
+		}
 	}
 
-	if (preferredColorScheme !== lastPreferredColorScheme) {
-		lastPreferredColorScheme = preferredColorScheme;
+	if (colorScheme !== lastColorScheme) {
+		lastColorScheme = colorScheme;
 
-		callback(preferredColorScheme); // eslint-disable-line callback-return
+		if (callback instanceof Function) {
+			callback(colorScheme); // eslint-disable-line callback-return
+		}
 	}
 
-	preferredColorSchemeInterval = setTimeout(watchColorScheme, preferredColorSchemeIntervalDelay, callback);
+	timeoutID = setTimeout(watch, delay || defaultDelay, callback);
 
-	return stopWatchColorScheme;
+	return stop;
 };
 
-const stopWatchColorScheme = () => {
-	clearTimeout(preferredColorSchemeInterval);
+const stop = () => {
+	clearTimeout(timeoutID);
 };

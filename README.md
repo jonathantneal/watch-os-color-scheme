@@ -4,8 +4,8 @@
 [![Build Status][cli-img]][cli-url]
 [![Support Chat][git-img]][git-url]
 
-[Watch OS Color Scheme] lets you watch your OS color scheme, following the
-[Media Queries] specification.
+[Watch OS Color Scheme] lets you watch your OS color scheme, similar to the
+[Media Queries] `@media (prefers-color-scheme)` specification.
 
 ## Usage
 
@@ -18,14 +18,33 @@ npm install watch-os-color-scheme
 Watch the OS for color scheme changes:
 
 ```js
-const watchColorScheme = require('watch-os-color-scheme');
+const watchOsColorScheme = require('watch-os-color-scheme');
 
-const stop = watchColorScheme(prefersColorScheme => {
-  console.log({ prefersColorScheme });
+const stop = watchOsColorScheme(prefersColorScheme => {
+  console.log({ prefersColorScheme }); // no-preference | light | dark
 });
 
 stop();
 ```
+
+[Watch OS Color Scheme] takes 2 arguments; a `callback` and an `interval`; and
+it returns a `stop` function.
+
+### callback
+
+The `callback` listener is called as the color scheme is initially detected and
+then each time the color scheme subsequently changes. It returns a single
+argument; a `colorScheme` string representing the preferred color scheme of the
+OS, which is either `no-preference`, `light`, or `dark`.
+
+### interval
+
+The `interval` number indicates how often the color scheme should be polled in
+milliseconds.
+
+### stop
+
+The `stop` function stops watching for color scheme changes.
 
 [cli-img]: https://img.shields.io/travis/jonathantneal/watch-os-color-scheme.svg
 [cli-url]: https://travis-ci.org/jonathantneal/watch-os-color-scheme
