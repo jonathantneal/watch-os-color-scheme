@@ -1,7 +1,7 @@
 {
   "name": "watch-os-color-scheme",
-  "version": "1.0.1",
-  "description": "Watch the OS color sceheme",
+  "version": "1.0.2",
+  "description": "Watch the OS color scheme",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
   "repository": "jonathantneal/watch-os-color-scheme",
